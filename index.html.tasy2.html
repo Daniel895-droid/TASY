@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Tasy na anestesia: guia passo a passo</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap">
+<style>
+:root{
+  --papel:#F1F5F4; --cartao:#FFFFFF; --tinta:#12222B; --suave:#51636C; --linha:#D3DCDA;
+  --tasy:#14306B; --campo:#1F8A70; --alvo:#E9B81F; --cirurgia:#D9606A;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){--papel:#0F1A1F;--cartao:#17252C;--tinta:#E8EFEE;--suave:#9DB0B6;--linha:#2B3D45;--tasy:#8FB0F5;--campo:#4CC3A4}
+}
+:root[data-theme="dark"]{--papel:#0F1A1F;--cartao:#17252C;--tinta:#E8EFEE;--suave:#9DB0B6;--linha:#2B3D45;--tasy:#8FB0F5;--campo:#4CC3A4}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--papel);color:var(--tinta);font-family:"Atkinson Hyperlegible",Verdana,"Segoe UI",sans-serif;font-size:17px;line-height:1.45}
+main{max-width:620px;margin:0 auto;padding:18px 16px 110px}
+h1{font-size:2rem;line-height:1.1;margin:10px 0 8px;letter-spacing:-.01em}
+h2{font-size:1.45rem;line-height:1.15;margin:14px 0 8px}
+h3{font-size:1rem;margin:26px 0 8px;display:flex;align-items:center;gap:8px}
+p{margin:0 0 12px}
+.suave{color:var(--suave)}
+button{font:inherit;color:inherit;cursor:pointer}
+button:focus-visible,a:focus-visible{outline:3px solid var(--alvo);outline-offset:2px}
+
+/* barras de fase, no estilo da linha do tempo da cirurgia */
+.fases{display:flex;gap:4px;margin:6px 0 2px}
+.fases i{flex:1;height:8px;border-radius:4px;background:var(--linha);overflow:hidden;display:block}
+.fases i b{display:block;height:100%;width:0;background:var(--cor)}
+.pino{width:12px;height:12px;border-radius:3px;background:var(--cor);flex:none}
+
+.topo{display:flex;justify-content:space-between;align-items:center;gap:10px;font-size:.9rem}
+.link{background:none;border:0;padding:8px 0;color:var(--tasy);font-weight:700;text-decoration:underline}
+
+.lista{list-style:none;margin:0;padding:0;background:var(--cartao);border:1px solid var(--linha);border-radius:12px;overflow:hidden}
+.lista li+li{border-top:1px solid var(--linha)}
+.lista button{display:flex;gap:12px;width:100%;text-align:left;background:none;border:0;padding:13px 14px;align-items:baseline}
+.lista .n{font-weight:700;color:var(--suave);min-width:1.6em}
+.principal{display:block;width:100%;border:0;border-radius:12px;background:var(--campo);color:#fff;font-weight:700;padding:15px;font-size:1.05rem;margin:14px 0 6px}
+:root[data-theme="dark"] .principal{color:#06231b}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .principal{color:#06231b}}
+.aviso{font-size:.88rem;border-left:4px solid var(--alvo);padding:8px 12px;background:var(--cartao);border-radius:0 8px 8px 0;margin:16px 0}
+
+.acao{font-size:1.08rem}
+.dica{font-size:.93rem;color:var(--suave);border-top:1px solid var(--linha);padding-top:10px;margin-top:4px}
+.legenda{font-size:.82rem;color:var(--suave);display:flex;align-items:center;gap:8px;margin:8px 0 14px}
+.legenda span{width:22px;height:12px;border:3px solid var(--alvo);border-radius:4px;flex:none}
+
+.rodape{position:fixed;left:0;right:0;bottom:0;background:var(--cartao);border-top:1px solid var(--linha);padding:10px 16px calc(10px + env(safe-area-inset-bottom,0px))}
+.rodape div{max-width:620px;margin:0 auto;display:flex;gap:10px}
+.rodape button{flex:1;border-radius:10px;padding:13px;font-weight:700;border:1px solid var(--linha);background:var(--papel)}
+.rodape button.av{flex:2;background:var(--campo);border-color:var(--campo);color:#fff}
+:root[data-theme="dark"] .rodape button.av{color:#06231b}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .rodape button.av{color:#06231b}}
+.rodape button:disabled{opacity:.4;cursor:default}
+
+/* ---------- tela simulada do Tasy (cores fixas, como uma captura) ---------- */
+.tw{border-radius:10px;overflow:hidden;background:#fff;color:#1b2733;font-size:12.5px;line-height:1.35;border:1px solid var(--linha);margin:12px 0 0}
+.tw *{max-width:100%}
+.tt{background:#14306B;color:#fff;display:flex;gap:10px;padding:8px 10px;align-items:center;flex-wrap:wrap}
+.tt strong{font-size:14px}
+.tt .ab{opacity:.65;padding-bottom:2px}
+.tt .ab.on{opacity:1;border-bottom:2px solid #fff}
+.tt .us{margin-left:auto;font-size:11px}
+.pt{background:#23282c;color:#fff;padding:6px 10px;display:flex;gap:4px 14px;flex-wrap:wrap;font-size:11px}
+.pt small{display:block;color:#aab4ba;font-size:9.5px}
+.tb{padding:12px;min-height:130px}
+.tb.az{background:#14306B;color:#fff}
+.tb.dim{background:#9aa4a9}
+.dl{background:#fff;color:#1b2733;border-radius:4px;box-shadow:0 6px 18px rgba(0,0,0,.3);padding:12px;margin:6px auto;max-width:310px}
+.dl h4{margin:0 0 8px;font-size:13px}
+.dl h4.am{background:#E5BE2A;margin:-12px -12px 10px;padding:8px 12px}
+.dl h4.ac{background:#5DB7EA;margin:-12px -12px 10px;padding:8px 12px}
+.bs{display:flex;gap:8px;justify-content:flex-end;margin-top:12px;flex-wrap:wrap;align-items:center}
+.b{display:inline-block;padding:5px 12px;border-radius:3px;font-weight:700;font-size:12px;background:#e4e8ea;color:#222}
+.b.a{background:#1e5fae;color:#fff}.b.v{background:#3d7a22;color:#fff}
+.lk{color:#1e5fae}
+.alvo{outline:3px solid #E9B81F;outline-offset:2px;border-radius:4px;animation:pulso 1.6s ease-in-out infinite}
+.alvo:has(> div){display:block}
+@keyframes pulso{50%{outline-offset:5px}}
+@media (prefers-reduced-motion:reduce){.alvo{animation:none}}
+.g{display:grid;grid-template-columns:1fr 1fr;gap:8px 10px}
+.f small{display:block;color:#5d6b73;font-size:10.5px}
+.f small.o::before{content:"* ";color:#c62828;font-weight:700}
+.f span{display:block;border:1px solid #b9c3c9;padding:4px 6px;min-height:24px;background:#fff}
+.f span.cz{background:#e9edef}
+.ln{display:flex;gap:8px;padding:5px 6px;border-bottom:1px solid #e3e8eb;align-items:center}
+.ln.sel{background:#d9e8f7}
+.ln .ok{color:#2e8b3a;font-weight:700}
+.ar{padding:3px 0 3px 14px}
+.ar.r{padding-left:0;background:#d9e8f7;padding:4px 6px}
+.fn{display:grid;grid-template-columns:1fr 1fr;gap:14px 10px;max-width:330px;margin:14px auto 6px}
+.fn span{padding:4px}
+.bx{display:inline-block;width:12px;height:12px;border:1px solid #7b8a92;vertical-align:-2px;margin-right:5px;background:#fff}
+.bx.m{background:#1e7fd6;border-color:#1e7fd6}
+svg{display:block;width:100%;height:auto}
+</style>
+</head>
+<body>
+<main id="app"></main>
+<div class="rodape" id="rodape" hidden><div>
+  <button id="bv">Voltar</button><button id="ba" class="av">Próximo passo</button>
+</div></div>
+
+<script>
+// ---------- peças das telas simuladas (todos os dados são fictícios) ----------
+const A = h => `<span class="alvo">${h}</span>`;
+const US = 'Dr(a). Anestesista';
+const PT = `<div class="pt"><span><small>Paciente</small>Maria Exemplo</span><span><small>Cirurgia</small>000123</span><span><small>Prontuário</small>0000001</span><span><small>Idade</small>45a</span><span><small>Setor</small>UTI Geral</span></div>`;
+function W(abas, corpo, o={}){
+  const t = abas.map((a,i)=>`<span class="ab ${i===abas.length-1?'on':''}">${a}</span>`).join('');
+  return `<div class="tw"><div class="tt"><strong>Tasy EMR</strong>${t}<span class="us">${o.us||US}</span></div>${o.pt?PT:''}<div class="tb ${o.c||''}">${corpo}</div></div>`;
+}
+const D = (tit, corpo, bot, cls='') => `<div class="dl"><h4 class="${cls}">${tit}</h4>${corpo}<div class="bs">${bot}</div></div>`;
+const F = (rot, val, obr, cz) => `<div class="f"><small class="${obr?'o':''}">${rot}</small><span class="${cz?'cz':''}">${val}</span></div>`;
+const PRONT = 'Prontuário Eletrônico…', GRAF = 'Gráficos da Cirurgia';
+const ARV = alvo => ['Avaliação pré-anestésica/Riscos','Descrição anestésica','RPA - Escalas e registros','Evoluções','Posição','Prescrição','Sinais vitais e monitorização','Balanço hídrico','Agentes anestésicos','Medicamentos','Soluções','Materiais','Hemoderivados']
+  .map(x=>`<div class="ar">${x===alvo?A(x):x}</div>`).join('');
+function GRAFICO(pontos){
+  let p='';
+  if(pontos) for(let x=120;x<300;x+=22) p+=`<rect x="${x}" y="32" width="6" height="6" fill="#3a9a3a"/><rect x="${x}" y="54" width="6" height="6" fill="#c9962a"/><rect x="${x}" y="76" width="6" height="6" fill="#1e7fd6" transform="rotate(45 ${x+3} 79)"/>`;
+  return `<svg viewBox="0 0 340 150" role="img" aria-label="Gráfico da cirurgia com sinais vitais e barras de paciente, anestesia e cirurgia">
+  <g font-size="9" fill="#44525a"><text x="4" y="40">ETCO2</text><text x="4" y="62">Freq. cardíaca</text><text x="4" y="84">Freq. resp.</text>
+  <text x="110" y="14">16:00</text><text x="190" y="14">17:00</text><text x="270" y="14">18:00</text>
+  <text x="4" y="112">Paciente</text><text x="4" y="126">Anestesia</text><text x="4" y="140">Cirurgia</text></g>
+  <g stroke="#d5dde1"><path d="M90 20H336M90 45H336M90 67H336M90 89H336"/></g>${p}
+  <rect x="90" y="104" width="230" height="7" rx="3" fill="#8CB81F"/><rect x="100" y="118" width="215" height="7" rx="3" fill="#E5BE2A"/><rect x="150" y="132" width="150" height="7" rx="3" fill="#D9606A"/></svg>`;
+}
+const BARRA = alvo => `<div class="bs" style="margin:0 0 6px"><span class="lk">${alvo==='ad'?A('Adicionar ▾'):'Adicionar ▾'}</span><span class="lk">${alvo==='oa'?A('Outras ações ▾'):'Outras ações ▾'}</span><span class="lk">Configurações ▾</span></div>`;
+const CPOE = alvo => `<div class="bs" style="margin:0 0 8px"><span class="b">Adicionar novo ▾</span><span class="b">Ver/Editar</span>${alvo==='lib'?A('<span class="b v">Liberar (1)</span>'):'<span class="b v" style="opacity:.5">Liberar (0)</span>'}</div>
+  <div class="f" style="margin-bottom:8px">${alvo==='add'?A('<span>🔍 Adicionar item</span>'):'<span>🔍 Adicionar item</span>'}</div>
+  ${['Nutrição','Soluções e Medicamentos','Recomendações','Exames e Procedimentos','Gasoterapia','Diálise'].map(x=>`<div class="ln"><span class="lk">⊕</span>${x} (0)</div>`).join('')}`;
+
+// ---------- fases e passos ----------
+const FASES_SV = [
+  {n:'Entrar no sistema', c:'#14306B'},
+  {n:'Abrir o paciente e a cirurgia', c:'#1F8A70'},
+  {n:'Ficha anestésica', c:'#C99A12'},
+  {n:'Prescrição', c:'#D9606A'},
+  {n:'Encerrar e imprimir', c:'#6B7A82'}
+];
+const P_SV = [
+// fase 0
+{f:0,t:'Entre com usuário e senha',
+ a:'Abra o Tasy pelo ícone na barra de tarefas. Digite seu nome de usuário e sua senha de rede e clique em Entrar.',
+ d:'No primeiro acesso, use a senha provisória enviada pela TI e troque-a logo em seguida.',
+ m:()=>W([],`<div style="text-align:center;padding:8px 0"><div style="font-size:15px;margin-bottom:10px">Tasy EMR</div><div class="g" style="grid-template-columns:1fr;max-width:200px;margin:0 auto;color:#1b2733"><div class="f"><span>Nome de usuário</span></div><div class="f"><span>Senha</span></div>${A('<span class="b v" style="display:block">Entrar</span>')}</div><div style="margin-top:8px;font-size:11px">Esqueci minha senha</div></div>`,{c:'az',us:' '})},
+{f:0,t:'Feche o aviso de nova versão',
+ a:'Se aparecer o aviso amarelo "Uma nova versão do Tasy Native está disponível", clique em Ok. Ele não impede o uso.',
+ m:()=>W([],D('⚠ Atenção','Uma nova versão do Tasy Native está disponível para download. Entre em contato com o setor de infraestrutura.',A('<span class="b a">Ok</span>'),'am'),{c:'az',us:' '})},
+{f:0,t:'Dispense o tour de boas-vindas',
+ a:'Na janela "Bem-vindo ao Tasy", marque "Não mostrar novamente" e clique em "Agora não".',
+ d:'Se quiser conhecer o sistema, clique em Iniciar: são 9 etapas curtas com vídeo.',
+ m:()=>W(['Comunicação Interna'],D('Bem-vindo ao Tasy','Preparamos um tour com os fundamentos de design e usabilidade do sistema.',`<span style="margin-right:auto">${A('<span><i class="bx m"></i>Não mostrar novamente</span>')}</span>${A('<span class="lk">Agora não</span>')}<span class="b v">Iniciar</span>`),{c:'dim'})},
+{f:0,t:'Feche a Comunicação Interna',
+ a:'O Tasy abre sozinho na aba "Comunicação Interna". Clique no X da aba para chegar à tela inicial.',
+ m:()=>W([`Comunicação Interna ${A('&nbsp;✕&nbsp;')}`],`<strong>Comunicação interna</strong><p style="text-align:center;margin:26px 0 8px">Seu filtro não encontrou nenhum resultado.</p><div style="text-align:center"><span class="b a">Adicionar</span></div>`)},
+{f:0,t:'Conheça a tela inicial',
+ a:'Esta é a tela de Funções. Para a rotina de anestesia, a entrada é o "Prontuário Eletrônico Perioperatório - PEPO".',
+ d:'As outras funções: PEP (prontuário do paciente), Gestão da Agenda Cirúrgica, CPOE (prescrição), Mentor, FANEP (ficha anestésica) e Gestão de Exames.',
+ m:()=>W([],`<div style="border-bottom:1px solid #fff;padding-bottom:4px;max-width:330px;margin:0 auto">🔍</div><div class="fn">${A('<span>📋 Prontuário Eletrônico Perioperatório - PEPO</span>')}<span>📋 Prontuário Eletrônico Paciente - PEP</span><span>💊 CPOE</span><span>🗓 Gestão da Agenda Cirúrgica</span><span>🧪 Gestão de Exames</span><span>💉 Ficha Anestésica - FANEP</span></div>`,{c:'az'})},
+{f:0,t:'Confira perfil e setor',
+ a:'Clique no seu nome, no canto superior direito. Confira se o Estabelecimento, o Perfil (Anestesista) e o Setor (Centro Cirúrgico) estão corretos.',
+ d:'É neste mesmo menu que ficam "Meu cadastro", "Alterar senha" e "Sair".',
+ m:()=>W([],`<div style="margin-left:auto;max-width:240px;background:#2d5aa6;padding:10px;border-radius:3px">${A(`<strong>${US} ▾</strong>`)}<div style="margin-top:8px">Estabelecimento: <strong>Clínica…</strong></div><div>Perfil: <strong>Anestesista</strong></div><div>Setor: <strong>Centro Cirúrgico</strong></div><hr style="border:0;border-top:1px dashed #9db6e0"><div>Meu cadastro</div><div>Alterar senha</div><div>Sair</div></div>`,{c:'az'})},
+// fase 1
+{f:1,t:'Abra o PEPO e ache o paciente',
+ a:'Clique em "Prontuário Eletrônico Perioperatório - PEPO". A Agenda Cirúrgica do dia aparece com sala, hora, duração e paciente. Localize a sua cirurgia e abra a linha (duplo clique).',
+ d:'O triângulo amarelo ao lado do nome indica que o paciente tem alertas de segurança.',
+ m:()=>W([PRONT],`<strong>Agenda Cirúrgica</strong><div class="ln" style="color:#5d6b73;font-size:10.5px"><span style="flex:2">Agenda</span><span>Hora</span><span style="flex:2">Paciente</span></div><div class="ln"><span class="ok">✔</span><span style="flex:2">Sala Hemodinâmica</span><span>07:00</span><span style="flex:2">José Exemplo</span></div>${A('<div class="ln sel"><span class="ok">✔</span><span style="flex:2">Sala 01 CC</span><span>16:00</span><span style="flex:2">⚠ Maria Exemplo</span></div>')}<div class="ln"><span class="ok">✔</span><span style="flex:2">Sala 02 CC</span><span>15:00</span><span style="flex:2">Ana Exemplo</span></div>`)},
+{f:1,t:'Leia os alertas de segurança',
+ a:'Ao abrir o paciente, o Tasy mostra os Alertas de Segurança: alergias, reações adversas e risco de TEV. Leia e clique em Fechar.',
+ m:()=>W([PRONT],D('Alertas de Segurança',`<div class="ln"><span style="flex:1">Alergias/reações adversas</span><span style="flex:1">CONFIRMADA: (descrição)</span></div><div class="ln"><span style="flex:1">Risco de TEV</span><span style="flex:1">Paciente não avaliado</span></div>`,A('<span class="b">Fechar</span>')),{pt:1,c:'dim'})},
+{f:1,t:'Assuma como anestesista',
+ a:'Na pergunta "Deseja assumir como anestesista da cirurgia?", clique em Ok. Seu nome passa a constar como médico anestesista.',
+ m:()=>W([PRONT],D('✔ Confirmação','Deseja assumir como anestesista da cirurgia?',`<span class="b">Cancelar</span>${A('<span class="b a">Ok</span>')}`,'ac'),{pt:1,c:'dim'})},
+{f:1,t:'Confirme o acesso ao prontuário',
+ a:'A janela "Informações requeridas no atendimento" lembra que o prontuário só deve ser acessado por quem participa do cuidado. Clique em OK.',
+ m:()=>W([PRONT],D('Informações requeridas no atendimento','<div class="ln">"Atenção, você precisa acessar esse prontuário? Somente acesse os…"</div>',A('<span class="b a">OK</span>')),{pt:1,c:'dim'})},
+{f:1,t:'Preencha os dados da cirurgia',
+ a:'Em "Informações da cirurgia", preencha todos os campos com asterisco vermelho: tipo de anestesia, avaliação pré-anestésica, via de acesso, classificação, porte, caráter, tipo de cirurgia e ASA. Informe também o peso.',
+ d:'Procedimento, cirurgião e data de início já vêm da agenda. O botão Salvar só fica ativo quando os obrigatórios estão preenchidos.',
+ m:()=>W([PRONT],`<strong>Informações da cirurgia</strong><div class="g" style="margin-top:8px">${F('Médico anestesista',US,1,1)}${A(F('Tipo de anestesia','Geral ▾',1))}${A(F('Avaliação pré-anestésica','Interna ▾',1))}${A(F('Via de acesso','Mesma via ▾',1))}${A(F('Classificação','Limpa ▾',1))}${A(F('Porte','Pequeno ▾',1))}${A(F('Caráter','Eletiva ▾',1))}${A(F('Tipo de cirurgia','Simples ▾',1))}${A(F('ASA','I - Saudável ▾',1))}${F('Peso','65')}</div>`,{pt:1})},
+{f:1,t:'Role a tela e salve',
+ a:'Role para baixo: confira setor e convênio e marque, se for o caso, órtese/prótese, vídeo, reoperação ou transfusão. Depois clique em Salvar.',
+ m:()=>W([PRONT],`<div class="g">${F('Setor','Centro Cirúrgico ▾')}${F('Convênio','(convênio)',0,1)}</div><p style="margin:10px 0"><i class="bx"></i>Órtese prótese &nbsp; <i class="bx"></i>Vídeo<br><i class="bx"></i>Reoperação &nbsp; <i class="bx"></i>Transfusão</p>${F('Observação','')}<div class="bs"><span class="b">Cancelar</span>${A('<span class="b a">Salvar</span>')}</div>`,{pt:1})},
+// fase 2
+{f:2,t:'Veja a árvore do prontuário',
+ a:'Com a cirurgia salva, a coluna da esquerda mostra tudo o que pode ser registrado: avaliação pré-anestésica, descrição anestésica, RPA, prescrição, sinais vitais, agentes, medicamentos, soluções e mais.',
+ d:'A linha da cirurgia, à direita, já mostra o cirurgião e você como anestesista.',
+ m:()=>W([PRONT],`<div class="g" style="grid-template-columns:1.1fr 1fr"><div><div class="ar r">▾ Procedimento exemplo</div>${ARV()}</div><div><strong>Informações da cirurgia</strong><div class="ln sel" style="margin-top:6px">000123 · Procedimento exemplo</div></div></div>`,{pt:1})},
+{f:2,t:'Abra os Gráficos',
+ a:'Clique com o botão direito na linha da cirurgia e escolha "Gráficos" (atalho F7). É ali que fica a ficha anestésica em linha do tempo.',
+ d:'O mesmo menu tem Registrar, Confirmar, Consultar e Revisão de cirurgia (F9).',
+ m:()=>W([PRONT],`<div class="ln sel">000123 · Procedimento exemplo</div><div class="dl" style="max-width:210px;margin:6px 0 0 30%;padding:6px 10px">${['Cirurgia ▸','Prontuário ▸','Sistemas externos'].map(x=>`<div style="padding:3px 0">${x}</div>`).join('')}${A('<div style="padding:3px 0">Gráficos <span style="float:right;color:#8a969c">F7</span></div>')}${['Registrar ▸','Confirmar ▸','Consultar ▸','Revisão de cirurgia'].map(x=>`<div style="padding:3px 0">${x}</div>`).join('')}</div>`,{pt:1})},
+{f:2,t:'Entenda a tela de Gráficos',
+ a:'Abre a aba "Gráficos da Cirurgia". Em cima ficam os sinais vitais no tempo. Embaixo, três barras: Paciente (verde), Anestesia (amarela) e Cirurgia (vermelha).',
+ d:'A linha azul vertical marca o horário atual.',
+ m:()=>W([PRONT,GRAF],BARRA()+GRAFICO(false),{pt:1})},
+{f:2,t:'Adicione sinais vitais',
+ a:'Clique em "Adicionar" e escolha "Sinais vitais e monitorização".',
+ m:()=>W([PRONT,GRAF],BARRA('ad')+GRAFICO(false),{pt:1})},
+{f:2,t:'Preencha e confirme',
+ a:'Confira a data e a hora, preencha FC, PAS, PAD, PAM e FR e role para baixo para PVC, BIS, pulso e ETCO2. Clique em OK: os pontos aparecem no gráfico.',
+ d:'Para lançar um registro atrasado, altere a hora no campo Data antes de confirmar. O ponto entra no horário informado.',
+ m:()=>W([PRONT,GRAF],D('Sinais vitais e monitorização',`<div class="g" style="grid-template-columns:1fr">${A(F('Data','06/10 16:05 🗓 🕒',1))}</div><div class="g" style="margin-top:8px">${F('FC (bpm)','60')}${F('PAS (mmHg)','110')}${F('PAD (mmHg)','60')}${F('PAM (mmHg)','')}</div>`,`<span class="b">Cancelar</span>${A('<span class="b a">OK</span>')}`),{pt:1,c:'dim'})},
+// fase 3
+{f:3,t:'Vá para a Prescrição',
+ a:'Volte para a aba "Prontuário Eletrônico" no topo e, na árvore da esquerda, clique em "Prescrição". O CPOE abre em uma nova aba.',
+ m:()=>W([A(PRONT),GRAF],`<div class="ar r">▾ Procedimento exemplo</div>${ARV('Prescrição')}`,{pt:1})},
+{f:3,t:'Adicione um item no CPOE',
+ a:'No campo "Adicionar item", digite o que quer prescrever (dieta, medicamento, recomendação, exame) e escolha na lista. Os grupos abaixo mostram o que já foi incluído.',
+ d:'Você também pode clicar no ⊕ de cada grupo.',
+ m:()=>W([PRONT,GRAF,'CPOE'],CPOE('add'),{pt:1})},
+{f:3,t:'Defina início, horários e término',
+ a:'Ajuste o início pelos ícones de calendário e relógio, confira os horários e escolha o término: "Mantido até 2ª ordem" ou "Programado" (com data fim). Clique em Salvar.',
+ d:'"Salvar e adicionar outro" grava e já abre um novo item.',
+ m:()=>W([PRONT,GRAF,'CPOE'],`<strong>Nutrição</strong><div class="g" style="grid-template-columns:1fr;margin-top:6px">${A(F('Início','06/10 18:00 🗓 🕒',1))}</div><p style="margin:8px 0"><span class="b" style="background:#d9e8f7">18:00</span> <span class="b" style="background:#d9e8f7">21:00</span> <span class="b" style="background:#d9e8f7">07:30</span></p><div class="f"><small class="o">Término</small></div>${A('<span><span class="b">Mantido até 2ª ordem</span><span class="b" style="background:#6b7780;color:#fff">Programado</span></span>')}<div class="bs"><span class="b">Cancelar</span>${A('<span class="b a">Salvar</span>')}</div>`,{pt:1})},
+{f:3,t:'Clique em Liberar',
+ a:'O item salvo ainda não vale. O botão verde "Liberar" mostra entre parênteses quantos itens estão pendentes. Clique nele.',
+ m:()=>W([PRONT,GRAF,'CPOE'],CPOE('lib'),{pt:1})},
+{f:3,t:'Confira e confirme a liberação',
+ a:'Em "Liberação de itens", confira o que está marcado, escolha o Setor (obrigatório), mantenha ADEP em "Sim" e clique em Confirmar.',
+ d:'O setor define onde a prescrição será executada: por exemplo, o Centro Cirúrgico ou a unidade para onde o paciente vai.',
+ m:()=>W([PRONT,GRAF,'CPOE'],D('Liberação de itens',`<div><strong>Novos itens (3)</strong></div><div class="ln"><i class="bx m"></i>Dieta (exemplo)</div><div class="ln"><i class="bx m"></i>Medicamento (exemplo)</div><div class="ln"><i class="bx m"></i>Recomendação (exemplo)</div><div class="g" style="margin-top:8px">${A(F('Setor','UTI Geral ▾',1))}${F('ADEP','Sim ▾')}</div>`,`<span class="b">Cancelar</span>${A('<span class="b v">Confirmar (3)</span>')}`),{pt:1,c:'dim'})},
+{f:3,t:'Libere o anatomopatológico à parte',
+ a:'Se houver peça para anatomia patológica, deixe esse item desmarcado na primeira liberação. Depois libere só ele, com o setor Centro Cirúrgico e "Imprimir após liberar" marcado.',
+ d:'Assim o pedido sai impresso no centro cirúrgico para acompanhar a peça.',
+ m:()=>W([PRONT,GRAF,'CPOE'],D('Liberação de itens',`<div><strong>Novos itens (1)</strong></div><div class="ln"><i class="bx m"></i>Anatomopatológico de peça cirúrgica</div><div class="g" style="margin-top:8px">${A(F('Setor','Centro Cirúrgico ▾',1))}${F('ADEP','Sim ▾')}</div>`,`${A('<span><i class="bx m"></i>Imprimir após liberar</span>')}<span class="b">Cancelar</span><span class="b v">Confirmar (1)</span>`),{pt:1,c:'dim'})},
+{f:3,t:'Confira e feche o CPOE',
+ a:'De volta ao CPOE, os itens liberados aparecem na linha do tempo e o botão volta para "Liberar (0)". Feche a aba CPOE no X.',
+ m:()=>W([PRONT,GRAF,`CPOE ${A('&nbsp;✕&nbsp;')}`],`<div class="bs" style="margin:0 0 8px"><span class="b v" style="opacity:.5">Liberar (0)</span></div><div class="ln">Recomendação (exemplo) <span class="b" style="margin-left:auto;font-weight:400">Observação médica</span></div><div class="ln sel">Anatomopatológico <span class="b" style="margin-left:auto;background:#E8912A;color:#fff;font-weight:400">Expira em 1 dia</span></div>`,{pt:1})},
+// fase 4
+{f:4,t:'Aguarde o fim da cirurgia no sistema',
+ a:'Você não precisa encerrar a cirurgia. Quando a enfermeira da sala registra o fim no sistema dela, o Tasy preenche a data de término e fecha tudo automaticamente.',
+ d:'Para conferir, abra as "Informações da cirurgia" na aba do Prontuário: o status aparece como "Realizada".',
+ m:()=>W([PRONT],`<strong>Informações da cirurgia</strong><div class="g" style="margin-top:8px">${F('Cirurgia','000123',0,1)}${A(F('Status','Realizada',0,1))}${F('Data início real','06/10 16:00',1)}${A(F('Data de término','06/10 18:40',0,1))}${F('Tipo de anestesia','Geral ▾',1)}${F('Avaliação pré-anestésica','Interna ▾',1)}</div>`,{pt:1})},
+{f:4,t:'Abra Outras ações',
+ a:'Na aba "Gráficos da Cirurgia", com os sinais vitais lançados, clique em "Outras ações" e role a lista até "Relatórios".',
+ d:'Na mesma lista ficam Eventos, Posição, Dispensação, Devolução, Registrar perda e Administrações.',
+ m:()=>W([PRONT,GRAF],BARRA('oa')+GRAFICO(true)+`<div class="dl" style="max-width:190px;margin:-70px 6px 0 auto;padding:6px 10px;position:relative">${['Eventos','Posição','Administrações'].map(x=>`<div style="padding:3px 0" class="lk">${x}</div>`).join('')}${A('<div style="padding:3px 0" class="lk">Relatórios</div>')}</div>`,{pt:1})},
+{f:4,t:'Gere a ficha',
+ a:'Na janela "Relatórios", marque "Gráficos do Prontuário Eletrônico Perioperatório". Clique em Visualizar para conferir na tela ou em Imprimir.',
+ d:'As outras opções geram os registros de enfermagem do transoperatório e o prontuário perioperatório completo.',
+ m:()=>W([PRONT,GRAF],D('Relatórios',`${F('Cirurgia','000123',0,1)}<p style="margin:10px 0 0"><i class="bx"></i>Considerar data<br><i class="bx"></i>Registros de Enfermagem do Transoperatório<br><i class="bx"></i>Prontuário Eletrônico Perioperatório</p>${A('<span><i class="bx m"></i>Gráficos do Prontuário Eletrônico Perioperatório</span>')}`,`<span class="b">Cancelar</span>${A('<span class="b a">Visualizar</span>')}${A('<span class="b a">Imprimir</span>')}`),{pt:1,c:'dim'})}
+];
+
+// ---------- trilha Unimed (dados fictícios) ----------
+const TS = 'Tela de Seleção';
+const ARVP = (alvo, extra='') => ['Meus pacientes','▾ Setores de internação','&nbsp;&nbsp;UI 1º andar par','&nbsp;&nbsp;UI 1º andar ímpar','&nbsp;&nbsp;UI 2º andar par','▾ UTI','Centro cirúrgico','Médicos','Atendimentos']
+  .map(x=>`<div class="ar">${x.replace(/&nbsp;|▾ /g,'')===alvo?A(x):x}</div>`+(x.replace(/&nbsp;|▾ /g,'')===alvo?extra:'')).join('');
+const SEL = (tipo, corpo, bot='') => `<div class="g">${F('Tipo','Protocolos ▾',0,1)}${tipo}</div><div class="g">${F('Protocolo','Prescrição CC ▾')}${F('Subtipo protocolo','Modelo 1 ▾')}</div>${corpo}<div class="bs">${bot||'<span class="b a" style="opacity:.5">Ir para os detalhes</span><span class="b v" style="opacity:.5">Liberar os itens</span>'}</div>`;
+const GRUPOS = m => `<div class="ln"><i class="bx"></i><strong>Nutrição (4)</strong></div><div class="ln" style="padding-left:20px"><i class="bx ${m?'m':''}"></i>Dieta (exemplo)</div><div class="ln"><i class="bx"></i><strong>Medicamento (15)</strong></div><div class="ln" style="padding-left:20px"><i class="bx ${m?'m':''}"></i>Analgésico (exemplo)</div><div class="ln" style="padding-left:20px"><i class="bx ${m?'m':''}"></i>Antiemético (exemplo)</div><div class="ln"><i class="bx"></i><strong>Solução (6)</strong></div><div class="ln" style="padding-left:20px"><i class="bx ${m?'m':''}"></i>Solução (exemplo)</div>`;
+const FASES_UN = [
+  {n:'Entrar no sistema', c:'#14306B'},
+  {n:'Achar o paciente', c:'#1F8A70'},
+  {n:'Prescrição por modelo', c:'#D9606A'},
+  {n:'Imprimir e ficha em papel', c:'#6B7A82'}
+];
+const P_UN = [
+{f:0,t:'Entre com usuário e senha',
+ a:'Abra o Tasy pelo ícone na barra de tarefas. Digite o seu usuário e a sua senha pessoal e clique em Entrar.',
+ d:'Use sempre o seu próprio login, nunca um usuário compartilhado do setor.',
+ m:()=>W([],`<div style="text-align:center;padding:8px 0"><div style="font-size:15px;margin-bottom:10px">Tasy EMR</div><div class="g" style="grid-template-columns:1fr;max-width:200px;margin:0 auto;color:#1b2733"><div class="f"><span>Nome de usuário</span></div><div class="f"><span>Senha</span></div>${A('<span class="b v" style="display:block">Entrar</span>')}</div><div style="margin-top:8px;font-size:11px">Esqueci minha senha</div></div>`,{c:'az',us:' '})},
+{f:0,t:'No primeiro acesso, redefina a senha',
+ a:'Na janela "Redefina sua senha", digite a senha atual (a provisória), crie a nova senha, repita em "Confirmar senha" e clique em Alterar.',
+ m:()=>W([],D('Redefina sua senha',`<div class="g" style="grid-template-columns:1fr">${F('Senha atual','••••••••••')}${F('Nova senha','••••••••')}${F('Confirmar senha','••••••••')}</div>`,`<span class="b">Cancelar</span>${A('<span class="b v">Alterar</span>')}`),{c:'az',us:' '})},
+{f:0,t:'Na tela inicial, clique no PEP',
+ a:'Aqui a entrada é pelo "Prontuário Eletrônico Paciente - PEP", e não pelo PEPO.',
+ d:'As outras funções desta tela: Agenda de Exames, Avaliação Pré-Anestésica Eletrônica (APAE), Consulta da Qualidade, Gestão da Agenda Cirúrgica, Gestão da Dor e PEPO.',
+ m:()=>W([],`<div style="border-bottom:1px solid #fff;padding-bottom:4px;max-width:330px;margin:0 auto">🔍</div><div class="fn"><span>🗓 Agenda de Exames</span><span>📋 Avaliação Pré-Anestésica Eletrônica - APAE</span><span>🗓 Gestão da Agenda Cirúrgica</span><span>🙂 Gestão da Dor</span><span>📋 Prontuário Eletrônico Perioperatório - PEPO</span>${A('<span>📋 Prontuário Eletrônico Paciente - PEP</span>')}</div>`,{c:'az'})},
+
+{f:1,t:'Clique em Centro cirúrgico',
+ a:'O PEP abre com uma árvore à esquerda. Clique em "Centro cirúrgico": aparecem os pacientes que estão no setor, com a sala, o médico e o diagnóstico.',
+ m:()=>W([PRONT],`<div class="g" style="grid-template-columns:1fr 1.2fr"><div>${ARVP('Centro cirúrgico')}</div><div><strong>Pacientes do setor</strong><div class="ln sel" style="margin-top:6px"><i class="bx m"></i>Sala 1 · Maria Exemplo</div><div class="ln"><i class="bx"></i>Sala 5 · José Exemplo</div></div></div>`)},
+{f:1,t:'Se não aparecer, procure pelo quarto',
+ a:'Se o seu paciente ainda não estiver na lista do centro cirúrgico, abra "Setores de internação", clique no andar onde ele está internado e procure pelo número do quarto.',
+ d:'Foi o caso do exemplo: o paciente ainda estava no quarto, no 1º andar.',
+ m:()=>W([PRONT],`<div class="g" style="grid-template-columns:1fr 1.2fr"><div>${ARVP('UI 1º andar par')}</div><div><strong>Pacientes do setor</strong><div class="ln" style="margin-top:6px"><i class="bx"></i>102 · Ana Exemplo</div>${A('<div class="ln sel"><i class="bx m"></i>142 · Maria Exemplo</div>')}<div class="ln"><i class="bx"></i>144 · José Exemplo</div></div></div>`)},
+{f:1,t:'Abra o paciente e feche os alertas',
+ a:'Clique no paciente. Antes do prontuário, o Tasy mostra a janela de Alertas (precaução de contato, por exemplo). Leia e clique em Fechar.',
+ m:()=>W([PRONT],D('Alertas','<div class="ln"><span style="flex:1">Precaução</span><span style="flex:2">Contato · Rastreamento de admissão</span></div>',A('<span class="b">Fechar</span>')),{pt:1,c:'dim'})},
+
+{f:2,t:'Clique em Prescrição - CPOE',
+ a:'Com o paciente aberto, a árvore da esquerda mostra as seções do prontuário. Clique em "Prescrição - CPOE".',
+ d:'O CPOE abre em uma nova aba e, a partir dele, a "Tela de Seleção" dos modelos de prescrição.',
+ m:()=>W([PRONT],`<div class="ar r">▾ 142 - Maria Exemplo</div>${['Evoluções/Avaliações','Sinais Vitais e Monitorização','Diagnósticos','Escalas e Índices'].map(x=>`<div class="ar">${x}</div>`).join('')}<div class="ar">${A('● Prescrição - CPOE')}</div>${['Precaução','Parecer médico','Cirurgias','Balanço Hídrico','Receitas'].map(x=>`<div class="ar">${x}</div>`).join('')}`,{pt:1})},
+{f:2,t:'Troque para Prescrição Modelo CC',
+ a:'Na Tela de Seleção, o campo "Tipo protocolo" vem em "Medicação Pré-Anestésica". Clique nele e escolha "Prescrição Modelo CC".',
+ d:'Os outros modelos da lista: Medicação Pré-Anestésica (para prescrever só a pré-medicação), Medicamentos/Recomendações/CC e Plano terapêutico para RPA.',
+ m:()=>W([PRONT,'CPOE',TS],`<div class="g">${F('Tipo','Protocolos ▾',0,1)}${F('Tipo protocolo','Medicação Pré-Anestésica ▾')}</div><div class="dl" style="max-width:230px;margin:-4px 0 0 40%;padding:6px 10px"><div style="padding:3px 0">☆ Medicação Pré-Anestésica</div><div style="padding:3px 0">☆ Medicamentos/Recomendações/CC</div><div style="padding:3px 0">☆ Plano terapêutico para RPA</div>${A('<div style="padding:3px 0">☆ Prescrição Modelo CC</div>')}</div>`,{pt:1})},
+{f:2,t:'Marque os itens que você quer',
+ a:'O modelo abre com os grupos: Anatomia patológica, Nutrição, Medicamento, Solução e Exames e Procedimentos. Marque a caixa de cada item que vai prescrever.',
+ d:'Marcar a caixa do grupo seleciona todos os itens dele. Role a tela para ver os grupos de baixo.',
+ m:()=>W([PRONT,'CPOE',TS],SEL(F('Tipo protocolo','Prescrição Modelo CC ▾'),A(GRUPOS(true))),{pt:1})},
+{f:2,t:'Vá para os detalhes e libere',
+ a:'Com os itens marcados, clique em "Ir para os detalhes" para conferir dose, via e horários de cada um. Quando terminar, clique em Liberar.',
+ d:'Só depois de liberada a prescrição passa a valer.',
+ m:()=>W([PRONT,'CPOE',TS],SEL(F('Tipo protocolo','Prescrição Modelo CC ▾'),GRUPOS(true),`${A('<span class="b a">Ir para os detalhes</span>')}<span class="b v">Liberar os itens</span>`),{pt:1})},
+
+{f:3,t:'Imprima pelo botão Relatórios',
+ a:'De volta ao CPOE, clique em "Relatórios". Aparecem as opções Visualizar, Imprimir e Configurações: escolha Imprimir.',
+ m:()=>W([PRONT,'CPOE'],`<div class="bs" style="margin:0 0 8px"><span class="b">Adicionar novo ▾</span>${A('<span class="b">Relatórios ▾</span>')}<span class="b v" style="opacity:.5">Liberar (0)</span></div><div class="dl" style="max-width:170px;margin:0 20px 0 auto;padding:6px 10px"><div style="padding:3px 0">Visualizar</div>${A('<div style="padding:3px 0">Imprimir</div>')}<div style="padding:3px 0">Configurações</div></div>`,{pt:1})},
+{f:3,t:'A ficha de anestesia é no papel',
+ a:'Neste hospital, a ficha anestésica não é feita no Tasy. Preencha a ficha em papel durante o procedimento, como de costume.',
+ d:'O Tasy aqui serve para a prescrição. Os sinais vitais, agentes e medicações da anestesia ficam registrados na ficha de papel.',
+ m:()=>`<div class="tw"><div class="tb" style="text-align:center;padding:26px 12px"><div style="font-size:30px">📝</div><strong>Ficha de anestesia em papel</strong><div style="color:#5d6b73;margin-top:4px">Não há registro da ficha no Tasy deste hospital.</div></div></div>`}
+];
+
+const GUIAS = {
+  sv:{nome:'Clínica São Vicente', sub:'Prescrição e ficha anestésica no Tasy', F:FASES_SV, P:P_SV},
+  un:{nome:'Hospital Unimed', sub:'Prescrição por modelo no Tasy, ficha em papel', F:FASES_UN, P:P_UN}
+};
+let G = null, FASES = FASES_SV, P = P_SV;
+
+// ---------- navegação ----------
+const app = document.getElementById('app'), rodape = document.getElementById('rodape');
+const bv = document.getElementById('bv'), ba = document.getElementById('ba');
+let atual = -1;
+const ler = () => { try { const v = parseInt(localStorage.getItem('tasy-passo-'+G),10); return v>=0 && v<P.length ? v : -1; } catch(e){ return -1; } };
+const gravar = v => { try { localStorage.setItem('tasy-passo-'+G, v); } catch(e){} };
+function usar(g){ G = g; FASES = GUIAS[g].F; P = GUIAS[g].P; try { localStorage.setItem('tasy-hospital', g); } catch(e){} }
+function escolher(){
+  atual = -1; G = null; rodape.hidden = true;
+  try { localStorage.removeItem('tasy-hospital'); } catch(e){}
+  app.innerHTML = `<h1>Tasy na anestesia</h1><p class="suave">O Tasy muda de um hospital para outro. Escolha onde você está.</p>
+  <ol class="lista" style="margin-top:16px">${Object.keys(GUIAS).map(k=>`<li><button data-h="${k}"><span><strong>${GUIAS[k].nome}</strong><br><span class="suave">${GUIAS[k].sub} · ${GUIAS[k].P.length} passos</span></span></button></li>`).join('')}</ol>
+  <p class="aviso">Guia de apoio, não oficial. As telas são simulações e todos os nomes e números são fictícios. Em caso de dúvida, vale o treinamento da instituição.</p>`;
+  window.scrollTo(0,0);
+}
+
+function barras(i){
+  return `<div class="fases" aria-hidden="true">${FASES.map((f,k)=>{
+    const ids = P.map((p,j)=>p.f===k?j:-1).filter(j=>j>=0);
+    const feitos = i<0 ? 0 : ids.filter(j=>j<=i).length;
+    return `<i style="--cor:${f.c}"><b style="width:${100*feitos/ids.length}%"></b></i>`;
+  }).join('')}</div>`;
+}
+function inicio(){
+  if(!G) return escolher();
+  atual = -1; rodape.hidden = true;
+  const s = ler();
+  let h = `<div class="topo"><button class="link" data-trocar>Trocar de hospital</button></div><h1>${GUIAS[G].nome}</h1><p class="suave">${GUIAS[G].sub}, em ${P.length} passos.</p>${barras(s)}
+  <button class="principal" data-ir="${s>0?s:0}">${s>0?`Continuar do passo ${s+1}`:'Começar pelo passo 1'}</button>
+  <p class="aviso">Guia de apoio, não oficial. As telas são simulações e todos os nomes e números são fictícios. Em caso de dúvida, vale o treinamento da instituição.</p>`;
+  FASES.forEach((f,k)=>{
+    h += `<h3><span class="pino" style="--cor:${f.c}"></span>${f.n}</h3><ol class="lista">`;
+    P.forEach((p,j)=>{ if(p.f===k) h += `<li><button data-ir="${j}"><span class="n">${j+1}</span><span>${p.t}</span></button></li>`; });
+    h += `</ol>`;
+  });
+  app.innerHTML = h; window.scrollTo(0,0);
+}
+function passo(i){
+  atual = i; gravar(i); rodape.hidden = false;
+  const p = P[i], f = FASES[p.f];
+  app.innerHTML = `<div class="topo"><button class="link" data-lista>Todos os passos</button><span class="suave">Passo ${i+1} de ${P.length}</span></div>
+  ${barras(i)}<h3 style="margin-top:14px"><span class="pino" style="--cor:${f.c}"></span>${f.n}</h3>
+  <h2>${p.t}</h2><p class="acao">${p.a}</p>${p.m()}
+  <p class="legenda"><span></span>O contorno amarelo mostra onde clicar ou o que conferir.</p>
+  ${p.d?`<p class="dica">${p.d}</p>`:''}`;
+  bv.disabled = i===0;
+  ba.textContent = i===P.length-1 ? 'Concluir' : 'Próximo passo';
+  window.scrollTo(0,0);
+}
+app.addEventListener('click', e=>{
+  const b = e.target.closest('[data-ir]'); if(b) return passo(+b.dataset.ir);
+  const h = e.target.closest('[data-h]'); if(h){ usar(h.dataset.h); return inicio(); }
+  if(e.target.closest('[data-trocar]')) return escolher();
+  if(e.target.closest('[data-lista]')) inicio();
+});
+bv.onclick = ()=>{ if(atual>0) passo(atual-1); };
+ba.onclick = ()=>{ if(atual<P.length-1) passo(atual+1); else { gravar(0); inicio(); } };
+document.addEventListener('keydown', e=>{
+  if(atual<0) return;
+  if(e.key==='ArrowRight' && atual<P.length-1) passo(atual+1);
+  if(e.key==='ArrowLeft' && atual>0) passo(atual-1);
+});
+try { const g = localStorage.getItem('tasy-hospital'); if(GUIAS[g]) usar(g); } catch(e){}
+inicio();
+</script>
+</body>
+</html>
